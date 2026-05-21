@@ -97,6 +97,6 @@ Como conclusión crítica del paradigma reactivo, se constata que el sistema car
 
 Pasos previos a la ejecucion: Instalar Python(version 3.10 o superior) y Webots.
 
-1. Clonar este repositorio en su estación de trabajo local.
-2. Abrir el software **Webots R2025a**.
-3. Ir a `File` -> `Open World` y seleccionar `escenario_simple.wbt` o `escenario_complejo.wbt` (dentro de la carpeta `/worlds`).
+Paso 1: Clonar o descargar este repositorio.
+Paso 2: Abrir el software Webots.
+Paso 3: Ir a `File` -> `Open World` y seleccionar `escenario_simple.wbt` o `escenario_complejo.wbt` (dentro de la carpeta `/worlds`).
