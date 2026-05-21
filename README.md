@@ -92,7 +92,7 @@ Se diseñó un sistema algorítmico reactivo gobernado por una **Máquina de Est
 
 ## 10. Gráficos de Señales Crudas, Filtradas y Estimadas
 
-![Comparación de Filtros](grafico_kalman_final.png)
+![](imagenes/grafico.png)
 
 ### Análisis del Gráfico:
 El gráfico de series temporales discrimina con claridad el comportamiento de los componentes. Los valles pronunciados representan las aproximaciones a los muros. Se observa cómo la señal de Kalman (línea sólida) filtra los picos de ruido e incertidumbre presentes en la señal cruda del sensor (línea punteada gris), permitiendo un cruce limpio del umbral de seguridad y gatillando la evasión de manera suave y predictiva.
