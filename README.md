@@ -83,7 +83,7 @@ Este gráfico ilustra la diferencia vital entre la percepción directa del robot
 
 ## Resultados Obtenidos en los Escenarios de Prueba
 
-* **Escenario Simple (`escenario_simple.wbt`):** Un entorno cerrado regular. El e-puck se desplazó de forma cíclica rebotando perpendicularmente contra los muros. El filtro de Kalman mantuvo un error de covarianza acotado y la evasión fue 100% exitosa dentro de la ventana observacional de 35.04 s.
+* **Escenario Simple (`escenario_simple.wbt`):** Un entorno cerrado regular. El e-puck se desplazó de forma cíclica rebotando perpendicularmente contra los muros. El filtro de Kalman mantuvo un error de covarianza acotado y la evasión fue 100% exitosa dentro de la ventana observacional de 35 s.
 * **Escenario Complejo (`escenario_complejo.wbt`):** Un laberinto de pasillos estrechos con callejones ciegos y obstáculos de madera de alta absorción. El robot requirió un incremento del umbral de seguridad a 0.16 m. El e-puck demostró la capacidad de navegar de forma autónoma, resolviendo las bifurcaciones y giros cerrados mediante evasión reactiva pura sin colisiones registradas.
 
 ## Análisis Final y Conclusiones
