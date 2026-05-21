@@ -87,6 +87,8 @@ Este gráfico ilustra la diferencia vital entre la percepción directa del robot
 ## Análisis Final y Conclusiones
 El laboratorio demostró la viabilidad de la fusión sensorial para corregir las deficiencias físicas de los sensores de bajo costo. El Filtro de Kalman probó ser superior a los filtros basados únicamente en promedios móviles, al incorporar la física del movimiento del robot (encoders) dentro del lazo de estimación. 
 
+En cueanto a la comparativa de comportamiento físico, al contrastar el desempeño físico del robot en el entorno de simulación, las lecturas crudas provocaron un comportamiento errático, gatillando giros prematuros ante el menor ruido en la señal. Al intentar gobernar la máquina de estados únicamente con el Filtro Simple (Media Móvil Exponencial), el suavizado introdujo un retraso temporal crítico; físicamente, el robot percibía que aún estaba en una zona segura cuando en la realidad ya había cruzado el umbral de los 16 centímetros. Esto se tradujo en una reacción tardía, provocando que el e-puck frenara encima del obstáculo y rozara la caja de madera antes de poder rotar. Por el contrario, la implementación del Filtro de Kalman resolvió ambos extremos: al ser predictivo gracias a la odometría, anuló el retraso temporal y permitió que el robot girara con fluidez y precisión milimétrica sin llegar a tocar las paredes.
+
 Como conclusión crítica del paradigma reactivo, se constata que el sistema carece de consciencia global del entorno (mapeo), por lo que las trayectorias resultantes dependen exclusivamente de la geometría local inmediata y la robustez del filtrado ante cambios en las propiedades de reflectancia de los materiales.
 
 ## Instrucciones para Ejecutar la Simulación
