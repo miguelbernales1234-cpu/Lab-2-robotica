@@ -94,6 +94,9 @@ En cuanto a la comparativa de comportamiento físico, al contrastar el desempeñ
 Como conclusión crítica del paradigma reactivo, se constata que el sistema carece de consciencia global del entorno (mapeo), por lo que las trayectorias resultantes dependen exclusivamente de la geometría local inmediata y la robustez del filtrado ante cambios en las propiedades de reflectancia de los materiales.
 
 ## Instrucciones para Ejecutar la Simulación
+
+Pasos previos a la ejecucion: Instalar Python(version 3.10 o superior) y Webots.
+
 1. Clonar este repositorio en su estación de trabajo local.
 2. Abrir el software **Webots R2025a**.
 3. Ir a `File` -> `Open World` y seleccionar `escenario_simple.wbt` o `escenario_complejo.wbt` (dentro de la carpeta `/worlds`).
