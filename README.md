@@ -76,7 +76,9 @@ Se diseñó un sistema algorítmico reactivo gobernado por una **Máquina de Est
 
 ## Gráficos de Señales Crudas, Filtradas y Estimadas
 
-![](imagenes/grafico.png)
+| Escenario Simple | Escenario Complejo |
+| :--- | :--- |
+| ![Simple](imagenes/grafico_simple.png) | ![Complejo](imagenes/grafico_complejo.png) |
 
 ### Análisis del Gráfico:
 Este gráfico ilustra la diferencia vital entre la percepción directa del robot y su entendimiento procesado al acercarse a un obstáculo. La línea gris punteada representa los datos crudos del sensor infrarrojo, los cuales se muestran sumamente inestables y ruidosos; si el controlador tomara decisiones basándose únicamente en esta lectura errática, el sistema ejecutaría giros accidentales. Para solucionar esto, la línea roja continua expone el trabajo del Filtro de Kalman, el cual actúa como el procesador central del sistema, limpiando el ruido y trazando un descenso confiable de la distancia real. De este modo, cuando el e-puck se aproxima a una pared, la estimación filtrada cruza la frontera límite de peligro de 16 cm (línea naranja) de forma precisa, ordenando la maniobra de giro en el instante exacto. Una vez que la rotación concluye y la trayectoria vuelve a estar libre, las mediciones saltan de regreso a su valor máximo, demostrando que el robot logra esquivar el obstáculo con éxito sin experimentar falsas alarmas.
