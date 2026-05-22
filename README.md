@@ -19,10 +19,10 @@ Se utilizó la plataforma robótica diferencial **e-puck**. Para cumplir con los
 ## Frecuencia de Muestreo Empleada y Datos Registrados
 El tiempo de muestreo del controlador ($T_s$) se vinculó directamente al paso básico de simulación del entorno mediante la función `robot.getBasicTimeStep()`, fijándose en **32 ms**, lo que equivale a una frecuencia de muestreo de **31.25 Hz**. Esto garantiza la captura síncrona de datos del hardware en cada iteración del reloj físico de Webots.
 
-Para el análisis de los resultados, no se pre-programó un límite temporal en el código, sino que se optó por una captura observacional. Se permitió la ejecución de la simulación en tiempo real y se pausó manualmente a los 35s. Las métricas acumuladas hasta ese instante se extrajeron transcribiendo los registros de salida (`logs`) impresos periódicamente en la consola del controlador. Dada la frecuencia estricta de 32 ms, esta ventana de prueba generó de forma intrínseca un registro de exactamente 1.095 muestras, las cuales componen el conjunto de datos para la evaluación gráfica.
+Para el análisis de los resultados, se optó por una captura observacional sin límites de tiempo pre-programados. La simulación se ejecutó en tiempo real y se pausó manualmente a los **35.04 s**. Las métricas acumuladas hasta ese instante se extrajeron transcribiendo los registros de salida (`logs`) impresos periódicamente en la consola del controlador. Dada la frecuencia estricta de 32 ms, esta ventana de prueba generó de forma intrínseca un registro de exactamente **1.095 muestras**, las cuales componen el conjunto de datos para la evaluación gráfica.
 
 ## Análisis de las Señales Registradas
-Los sensores infrarrojos de proximidad del e-puck entregan lecturas crudas adimensionales de cortísimo alcance (valores cercanos a 74 en el vacío y superiores a 3000 al contacto). Para el análisis de distancia, se implementó una función de conversión hiperbólica basada en la atenuación geométrica de la luz:
+Los sensores infrarrojos de proximidad del e-puck entregan lecturas crudas adimensionales de cortísimo alcance. Para el análisis de distancia, se implementó una función de conversión hiperbólica basada en la atenuación geométrica de la luz:
 
 $$z_k = \frac{15.0}{val_{max}^{0.8}}$$
 
@@ -46,7 +46,7 @@ Donde se utilizó un factor de suavizado $\alpha = 0.2$. Si bien el filtro reduj
 ## Implementación del Filtro de Kalman
 Para lograr una estimación óptima de la distancia frontal libre, se diseñó un Filtro de Kalman lineal escalar que fusiona el avance cinemático (modelo de proceso) con la telemetría infrarroja (modelo de observación).
 
-### Parámetros de Ruido Configuraciones:
+### Parámetros de Ruido:
 * **Covarianza del Proceso ($Q = 0.0001$):** Baja incertidumbre asignada a la lectura de los encoders.
 * **Covarianza de la Medición ($R = 0.02$):** Varianza moderada que modela el ruido y la imprecisión del sensor infrarrojo frente a diferentes materiales.
 
@@ -79,24 +79,23 @@ Se diseñó un sistema algorítmico reactivo gobernado por una **Máquina de Est
 ![](imagenes/grafico.png)
 
 ### Análisis del Gráfico:
-Este gráfico ilustra la diferencia vital entre la percepción directa del robot y su entendimiento procesado al acercarse a un obstáculo. La línea gris punteada representa los datos crudos del sensor infrarrojo, los cuales se muestran sumamente inestables y ruidosos debido a las interferencias de la luz y la textura oscura de la madera; si el controlador tomara decisiones basándose únicamente en esta lectura errática, el sistema ejecutaría giros accidentales o terminaría colisionando. Para solucionar esto, la línea roja continua expone el trabajo del Filtro de Kalman, el cual actúa como el verdadero procesador central del sistema, limpiando el ruido y trazando un descenso suave y confiable de la distancia real. De este modo, cuando el e-puck se aproxima a una pared (representado por las caídas en las gráficas), la estimación filtrada cruza la frontera límite de peligro de 16 centímetros (la línea naranja horizontal) de forma limpia y precisa, ordenando la maniobra de giro en el instante exacto. Una vez que la rotación concluye y la trayectoria vuelve a estar libre, las mediciones saltan repentinamente de regreso a su valor máximo de 0.40 m, demostrando que el robot logra esquivar el obstáculo con éxito y continúa su marcha sin experimentar falsas alarmas.
+Este gráfico ilustra la diferencia vital entre la percepción directa del robot y su entendimiento procesado al acercarse a un obstáculo. La línea gris punteada representa los datos crudos del sensor infrarrojo, los cuales se muestran sumamente inestables y ruidosos; si el controlador tomara decisiones basándose únicamente en esta lectura errática, el sistema ejecutaría giros accidentales. Para solucionar esto, la línea roja continua expone el trabajo del Filtro de Kalman, el cual actúa como el procesador central del sistema, limpiando el ruido y trazando un descenso confiable de la distancia real. De este modo, cuando el e-puck se aproxima a una pared, la estimación filtrada cruza la frontera límite de peligro de 16 cm (línea naranja) de forma precisa, ordenando la maniobra de giro en el instante exacto. Una vez que la rotación concluye y la trayectoria vuelve a estar libre, las mediciones saltan de regreso a su valor máximo, demostrando que el robot logra esquivar el obstáculo con éxito sin experimentar falsas alarmas.
 
 ## Resultados Obtenidos en los Escenarios de Prueba
 
-* **Escenario Simple (`escenario_simple.wbt`):** Un entorno cerrado regular. El e-puck se desplazó de forma cíclica rebotando perpendicularmente contra los muros. El filtro de Kalman mantuvo un error de covarianza acotado y la evasión fue 100% exitosa dentro de la ventana observacional de 35s.
-* **Escenario Complejo (`escenario_complejo.wbt`):** Un laberinto de pasillos estrechos con callejones ciegos y obstáculos de madera de alta absorción. El robot requirió un incremento del umbral de seguridad a 0.16 m. El e-puck demostró la capacidad de navegar de forma autónoma, resolviendo las bifurcaciones y giros cerrados mediante evasión reactiva pura sin colisiones registradas.
+* **Escenario Simple (`escenario_simple.wbt`):** Un entorno cerrado regular. El e-puck se desplazó de forma cíclica rebotando contra los muros. La evasión fue 100% exitosa dentro de la ventana de 35.04 s.
+* **Escenario Complejo (`escenario_complejo.wbt`):** Un laberinto de pasillos estrechos con callejones ciegos y obstáculos de madera. El robot demostró la capacidad de navegar de forma autónoma, resolviendo las bifurcaciones y giros cerrados mediante evasión reactiva pura sin colisiones.
 
 ## Análisis Final y Conclusiones
-El laboratorio demostró la viabilidad de la fusión sensorial para corregir las deficiencias físicas de los sensores de bajo costo. El Filtro de Kalman probó ser superior a los filtros basados únicamente en promedios móviles, al incorporar la física del movimiento del robot (encoders) dentro del lazo de estimación. 
+El laboratorio demostró la viabilidad de la fusión sensorial para corregir las deficiencias físicas de los sensores de bajo costo. El Filtro de Kalman probó ser superior a los filtros basados únicamente en promedios móviles, al incorporar la física del movimiento del robot dentro del lazo de estimación. 
 
-En cuanto a la comparativa de comportamiento físico, al contrastar el desempeño del robot en el entorno de simulación, las lecturas crudas provocaron un comportamiento errático, gatillando giros prematuros ante el menor ruido en la señal. Al intentar gobernar la máquina de estados únicamente con el Filtro Simple (Media Móvil Exponencial), el suavizado introdujo un retraso temporal crítico; físicamente, el robot percibía que aún estaba en una zona segura cuando en la realidad ya había cruzado el umbral de los 16 centímetros. Esto se tradujo en una reacción tardía, provocando que el e-puck frenara encima del obstáculo y rozara la caja de madera antes de poder rotar. Por el contrario, la implementación del Filtro de Kalman resolvió ambos extremos: al ser predictivo gracias a la odometría, anuló el retraso temporal y permitió que el robot girara con fluidez y precisión milimétrica sin llegar a tocar las paredes.
-
-Como conclusión crítica del paradigma reactivo, se constata que el sistema carece de consciencia global del entorno (mapeo), por lo que las trayectorias resultantes dependen exclusivamente de la geometría local inmediata y la robustez del filtrado ante cambios en las propiedades de reflectancia de los materiales.
+En cuanto a la comparativa de comportamiento físico, las lecturas crudas provocaron un comportamiento errático, gatillando giros prematuros ante el ruido. El Filtro Simple (EMA) introdujo un retraso temporal crítico, provocando una reacción tardía donde el e-puck frenaba encima del obstáculo. Por el contrario, la implementación del Filtro de Kalman anuló este retraso, permitiendo que el robot girara con precisión milimétrica sin llegar a tocar las paredes. Se concluye que, aunque el paradigma reactivo carece de mapeo global, la robustez del filtrado ante cambios en la reflectancia permite una navegación autónoma efectiva.
 
 ## Instrucciones para Ejecutar la Simulación
 
-Pasos previos a la ejecucion: Instalar Python(version 3.10 o superior) y Webots.
+**Requisitos:** Python 3.10+ y Webots R2025a.
 
-Paso 1: Clonar o descargar este repositorio.
-Paso 2: Abrir el software Webots.
-Paso 3: Ir a `File` -> `Open World` y seleccionar `escenario_simple.wbt` o `escenario_complejo.wbt` (dentro de la carpeta `/worlds`).
+1. Clonar o descargar este repositorio.
+2. Abrir el software Webots.
+3. Ir a `File` -> `Open World` y seleccionar `escenario_simple.wbt` o `escenario_complejo.wbt` (dentro de la carpeta `/worlds`).
+4. Asegurarse de que el controlador esté vinculado y presionar `Play`.
