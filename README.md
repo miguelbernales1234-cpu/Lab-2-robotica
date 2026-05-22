@@ -83,6 +83,9 @@ En lo referente a la comparativa del comportamiento físico simulado, depender d
 Como conclusión final respecto al paradigma implementado, es crucial destacar que el sistema diseñado carece intencionalmente de una consciencia global o mapeo del mundo. La navegación resultante depende enteramente de la geometría del metro cuadrado que rodea al robot en el instante presente. A pesar de esta estricta limitación teórica local, la extrema robustez otorgada por el filtrado frente a los constantes cambios ambientales y materiales permite, a todos los efectos prácticos, alcanzar una navegación autónoma ágil, reactiva y totalmente segura en entornos domésticos e industriales.
 
 ## Instrucciones para Ejecutar la Simulación
-Para poder reproducir fielmente los resultados obtenidos en este informe, es estrictamente necesario contar con un entorno de desarrollo preparado con el lenguaje Python 3.10 o una versión superior, además de tener instalada la versión R2025a del simulador robótico Webots.
+Pasos previos a la ejecucion: Instalar Python(version 3.10 o superior) y Webots.
 
-El procedimiento inicial consiste en clonar o descargar en su totalidad los archivos de este repositorio en una máquina local. A continuación, se debe ejecutar el software Webots y utilizar la barra de menú superior para abrir los mundos generados. Navegando hacia la carpeta correspondiente, se podrá seleccionar y cargar tanto el entorno de prueba simple como el laberinto complejo. Finalmente, tras asegurarse de que el script en Python del controlador está correctamente vinculado en la jerarquía del e-puck dentro del simulador, bastará con presionar el botón de reproducción general para dar inicio a la navegación autónoma en tiempo real.
+1. Clonar o descargar este repositorio.
+2. Abrir el software Webots.
+3. Ir a `File` -> `Open World` y seleccionar `escenario_simple.wbt` o `escenario_complejo.wbt` (dentro de la carpeta `/worlds`).
+4. Asegurarse de que el controlador esté vinculado y presionar `Play`.
