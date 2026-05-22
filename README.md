@@ -11,7 +11,7 @@
 El objetivo de este laboratorio es implementar y evaluar un sistema de percepción y fusión sensorial en un robot móvil autónomo utilizando simulación en Webots. Se busca combinar la información cinemática predictiva de los encoders con la medición del entorno proveniente de sensores de distancia mediante un Filtro de Kalman escalar, garantizando una navegación reactiva robusta y libre de colisiones en entornos de complejidad variable.
 
 ## Descripción del Robot y Sensores Utilizados
-Para este proyecto se utilizó la plataforma robótica diferencial e-puck. Con el fin de cumplir con los requerimientos de percepción del entorno y estimación de movimiento, se instrumentaron múltiples sensores estratégicamente ubicados en el chasis del robot.
+Para este proyecto se utilizó la plataforma robótica diferencial e-puck. Con el fin de cumplir con los requerimientos de percepción del entorno y estimación de movimiento, se instrumentaron múltiples sensores estratégicamente ubicados en el robot.
 
 En cuanto a la percepción de proximidad, se emplearon sensores infrarrojos para la detección frontal de obstáculos, específicamente los modelos denominados `ps0` para el lado derecho y `ps7` para el lado izquierdo. Para asistir en la toma de decisiones durante las maniobras evasivas, se añadieron sensores laterales posicionados a 90 grados: el sensor `ps2` para el lateral derecho y el sensor `ps5` para el izquierdo. 
 
